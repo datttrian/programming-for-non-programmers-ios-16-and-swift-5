@@ -40,8 +40,11 @@ struct ButtonGrid: View {
     }
     
     func numberWasPressed(button: CalculatorButton) {
-        let currentValueInt = Int(currentValue + button.buttonText)!
-        currentValue = "\(currentValueInt)"
+        if let currentValueInt = Int(currentValue + button.buttonText) {
+            currentValue = "\(currentValueInt)"
+        } else {
+            currentValue = "Error"
+        }
     }
     
     func modeWasPressed(button: CalculatorButton) {
