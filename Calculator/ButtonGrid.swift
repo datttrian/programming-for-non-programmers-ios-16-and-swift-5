@@ -17,6 +17,8 @@ enum CalculatorMode {
 struct ButtonGrid: View {
     @Binding var currentValue: String
     @State var currentMode: CalculatorMode = .notSet
+    @State var lastButtonWasMode = false
+    
     var body: some View {
         Grid {
             GridRow {
@@ -48,6 +50,10 @@ struct ButtonGrid: View {
     }
     
     func numberWasPressed(button: CalculatorButton) {
+        if lastButtonWasMode {
+            lastButtonWasMode = false
+        }
+        
         if let currentValueInt = Int(currentValue + button.buttonText) {
             currentValue = "\(currentValueInt)"
         } else {
@@ -58,6 +64,7 @@ struct ButtonGrid: View {
     func modeWasPressed(button: CalculatorButton) {
         currentMode = button.mode
         print("mode was pressed \(currentMode)")
+        lastButtonWasMode = true
     }
     
     func clearWasPressed(button: CalculatorButton) {
@@ -66,6 +73,9 @@ struct ButtonGrid: View {
     
     func equalWasPressed(button: CalculatorButton) {
         print("equal was pressed")
+        if currentMode == .notSet || lastButtonWasMode {
+            return
+        }
     }
     
 }
