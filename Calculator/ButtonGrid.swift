@@ -7,27 +7,35 @@
 
 import SwiftUI
 
+enum CalculatorMode {
+    case notSet
+    case addition
+    case substraction
+    case multiplication
+}
+
 struct ButtonGrid: View {
     @Binding var currentValue: String
+    @State var currentMode: CalculatorMode = .notSet
     var body: some View {
         Grid {
             GridRow {
                 CalculatorButton(buttonText: "1", action: numberWasPressed)
                 CalculatorButton(buttonText: "2", action: numberWasPressed)
                 CalculatorButton(buttonText: "3", action: numberWasPressed)
-                CalculatorButton(color: .orange, buttonText: "+", action: modeWasPressed)
+                CalculatorButton(color: .orange, buttonText: "+", action: modeWasPressed, mode: .addition)
             }
             GridRow {
                 CalculatorButton(buttonText: "4", action: numberWasPressed)
                 CalculatorButton(buttonText: "5", action: numberWasPressed)
                 CalculatorButton(buttonText: "6", action: numberWasPressed)
-                CalculatorButton(color: .orange, buttonText: "-", action: modeWasPressed)
+                CalculatorButton(color: .orange, buttonText: "-", action: modeWasPressed, mode: .substraction)
             }
             GridRow {
                 CalculatorButton(buttonText: "7", action: numberWasPressed)
                 CalculatorButton(buttonText: "8", action: numberWasPressed)
                 CalculatorButton(buttonText: "9", action: numberWasPressed)
-                CalculatorButton(color: .orange, buttonText: "X", action: modeWasPressed)
+                CalculatorButton(color: .orange, buttonText: "X", action: modeWasPressed, mode: .multiplication)
             }
             GridRow {
                 CalculatorButton(width: 148, buttonText: "0", action: numberWasPressed)
@@ -48,7 +56,8 @@ struct ButtonGrid: View {
     }
     
     func modeWasPressed(button: CalculatorButton) {
-        print("mode was pressed")
+        currentMode = button.mode
+        print("mode was pressed \(currentMode)")
     }
     
     func clearWasPressed(button: CalculatorButton) {
