@@ -82,6 +82,18 @@ struct ButtonGrid: View {
         if currentMode == .notSet || lastButtonWasMode {
             return
         }
+        
+        if currentMode == .addition {
+            savedIn += currentInt
+        } else if currentMode == .substraction {
+            savedIn -= currentInt
+        } else if currentMode == .multiplication {
+            savedIn *= currentInt
+        }
+        
+        currentInt = savedIn
+        updateText()
+        lastButtonWasMode = true
     }
     
     func updateText() {
