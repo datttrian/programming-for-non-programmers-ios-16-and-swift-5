@@ -18,6 +18,8 @@ struct ButtonGrid: View {
     @Binding var currentValue: String
     @State var currentMode: CalculatorMode = .notSet
     @State var lastButtonWasMode = false
+    @State var savedIn = 0
+    @State var currentInt = 0
     
     var body: some View {
         Grid {
@@ -52,12 +54,16 @@ struct ButtonGrid: View {
     func numberWasPressed(button: CalculatorButton) {
         if lastButtonWasMode {
             lastButtonWasMode = false
+            currentInt = 0
         }
         
-        if let currentValueInt = Int(currentValue + button.buttonText) {
-            currentValue = "\(currentValueInt)"
+        if let currentValueInt = Int("\(currentInt)" + button.buttonText) {
+            //            currentValue = "\(currentValueInt)"
+            currentInt = currentValueInt
+            updateText()
         } else {
             currentValue = "Error"
+            currentInt = 0
         }
     }
     
@@ -76,6 +82,13 @@ struct ButtonGrid: View {
         if currentMode == .notSet || lastButtonWasMode {
             return
         }
+    }
+    
+    func updateText() {
+        if currentMode == .notSet {
+            savedIn = currentInt
+        }
+        currentValue = "\(currentInt)"
     }
     
 }
