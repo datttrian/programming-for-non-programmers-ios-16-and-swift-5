@@ -74,6 +74,11 @@ struct ButtonGrid: View {
     }
     
     func clearWasPressed(button: CalculatorButton) {
+        currentValue = "0"
+        currentMode = .notSet
+        lastButtonWasMode = false
+        savedIn = 0
+        currentInt = 0
         print("clear was pressed")
     }
     
