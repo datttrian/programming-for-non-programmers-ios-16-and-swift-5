@@ -100,7 +100,9 @@ struct ButtonGrid: View {
         if currentMode == .notSet {
             savedIn = currentInt
         }
-        currentValue = "\(currentInt)"
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        currentValue = formatter.string(for: currentInt) ?? "Error"
     }
     
 }
